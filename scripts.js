@@ -1,23 +1,3 @@
-const cardList = [{
-    title: 'Melbourne',
-    path: 'images/melbourne.jpg',
-    subTitle: 'About Melbourne',
-    description: 'Description of Melbourne'
-},
-{
-    title: 'Queensland',
-    path: 'images/queensland.jpg',
-    subTitle: 'About Queensland',
-    description: 'Description of Queensland '
-},
-{
-    title: 'Adelaide',
-    path: 'images/adelaide image.jpg',
-    subTitle: 'About Adelaide',
-    description: 'Description of Adelaide'
-}];
-
-
 const addCards = (items) => {
     items.forEach(item => {
         let itemToAppend = `<div class="col s4 center-align">
@@ -40,21 +20,43 @@ const addCards = (items) => {
 };
 
 
-const formSumitted = () => {
+const formSubmitted = () => {
     let formData = {};
-    formData.firstName = $('#first_name').val();
-    formData.lastName = $('#last_name').val();
-    formData.password = $('#password').val();
-    formData.email = $('#email').val();
+    formData.title = $('#title').val();
+    formData.subTitle = $('#subTitle').val();
+    formData.path = $('#path').val();
+    formData.description = $('#description').val();
 
     console.log(formData);
+    postState(formData);
+}
+
+function postState(state){
+    $.ajax({
+        url:'/api/state',
+        type:'POST',
+        data:state,
+        success: (result)=>{
+            if (result.statusCode === 201) {
+                alert('States post successful');
+            }
+        }
+    });
+}
+
+function getAllState(){
+    $.get('/api/state', (response)=>{
+        if (response.statusCode === 200) {
+            addCards(response.data);
+        }
+    });
 }
 
 $(document).ready(function(){
     $('.materialboxed').materialbox();
     $('#formSubmit').click(()=>{
-        formSumitted();
+        formSubmitted();
     });
-    addCards(cardList);
     $('.modal').modal();
+    getAllState();
 });
