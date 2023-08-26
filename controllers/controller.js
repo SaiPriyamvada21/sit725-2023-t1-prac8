@@ -17,4 +17,12 @@ const getAllState=(req,res)=>{
     });
 }
 
-module.exports={postState,getAllState}
+const deleteState=(req,res)=>{
+    let state=req.body;
+    collection.deleteState(state,(err,result)=>{
+        if (!err) {
+            res.json({statusCode:200, data:result, message:'succsess'});
+        }
+    });
+}
+module.exports={postState,getAllState,deleteState}

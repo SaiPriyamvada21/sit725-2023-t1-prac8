@@ -8,4 +8,8 @@ function postState(state,callback) {
 function getAllState(callback){
     collection.find({}).toArray(callback);
 }
-module.exports ={postState,getAllState}
+function deleteState(callback){
+    collection.deleteOne(state,callback);
+}
+
+module.exports ={postState,getAllState,deleteState}

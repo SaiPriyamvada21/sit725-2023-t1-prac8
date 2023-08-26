@@ -12,4 +12,9 @@ router.post('/', (req,res)=>{
     controller.postState(req,res);
 });
 
+router.delete('/', (req,res)=>{
+    
+    controller.deleteState(req,res);
+});
+
 module.exports = router;
